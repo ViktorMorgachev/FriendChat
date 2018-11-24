@@ -44,8 +44,7 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@id/btn_register"
         app:layout_constraintLeft_toRightOf="@id/left_limiter"
-        app:layout_constraintRight_toLeftOf="@id/right_limiter"
-        app:layout_constraintTop_toBottomOf="@+id/image" />
+        app:layout_constraintRight_toLeftOf="@id/right_limiter" />
 
     <Button
         android:id="@+id/btn_register"
@@ -60,22 +59,30 @@
         app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <android.support.v7.widget.AppCompatTextView
-        android:layout_width="0dp"
-        android:textSize="15dp"
         android:id="@+id/tv_alternative_text"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/alternative_entering"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@id/iv_google_enter"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/btn_register"
+        app:layout_constraintTop_toBottomOf="@id/btn_register" />
+
+    <ImageView
+        android:id="@+id/iv_google_enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/googleg_standard_color_18"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_alternative_text"
+
         />
-
-
     <!--- Заглушки для построения UI/> -->
-    <!--Добавим иконки для входа с альтернативных аккаунтов-->
-
+    <!--Добавим иконки для входа с альтернативных аккаунтов, достаточно Google-->
 
     <View
         android:id="@+id/right_limiter"
