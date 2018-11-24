@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LoveChat</string>
+    <string name="ok">ОК</string>
+    <string name="tv_nick">Ваш ник</string>
+    <string name="tv_password">Ваш пароль</string>
+    <string name="send">Отправить</string>
+</resources>
