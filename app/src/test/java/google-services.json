@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1031422053424",
+    "firebase_url": "https://lovechat-c8413.firebaseio.com",
+    "project_id": "lovechat-c8413",
+    "storage_bucket": "lovechat-c8413.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031422053424:android:27847c438080dbf4",
+        "android_client_info": {
+          "package_name": "com.lovechat.myselve.lovechat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031422053424-17nq0mmqne4rdtaucm3d98p9ph36fj7s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lovechat.myselve.lovechat",
+            "certificate_hash": "4c9da000b519a1d562950be15e7a1926dd3624c8"
+          }
+        },
+        {
+          "client_id": "1031422053424-j30gp7ttc9sq355u86m7e469gq9kc26j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRuB5cTr4Z5odPzGjbhQ6499vSeL-3UeE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031422053424-j30gp7ttc9sq355u86m7e469gq9kc26j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

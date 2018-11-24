@@ -14,7 +14,7 @@ class ChatsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.chats_fragment_layout, null)
+        val view = inflater.inflate(R.layout.search_fragment_layout, null)
         return view
     }
 }

@@ -5,5 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="button_enter_color">#30a7f5</color>
     <color name="button_send_color">#30a7f5</color>
+    <color name="blue">#10eefd</color>
 
 </resources>
