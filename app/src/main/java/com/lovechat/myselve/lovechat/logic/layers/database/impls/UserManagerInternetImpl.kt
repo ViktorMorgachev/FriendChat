@@ -24,7 +24,7 @@ class UserManagerInternetImpl private constructor() : UserManagerInternet {
         mAuth.createUserWithEmailAndPassword(user.email.toString(), user.password.toString())
             .addOnCompleteListener {
                 when{
-                    it.isSuccessful -> // Нужно подписаться на событие и в случае успеха или не успеха указать
+                  //  it.isSuccessful -> // Нужно подписаться на событие и в случае успеха или не успеха указать
                     // Активности какой результат получили
                 }
             }
@@ -36,7 +36,8 @@ class UserManagerInternetImpl private constructor() : UserManagerInternet {
     }
 
     override fun checkUser(): Boolean {
-
+        mAuth = FirebaseAuth.getInstance()
+        return !mAuth.currentUser!!.equals("")
     }
 
     companion object {

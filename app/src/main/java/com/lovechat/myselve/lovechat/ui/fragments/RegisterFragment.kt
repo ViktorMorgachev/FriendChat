@@ -11,8 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import com.lovechat.myselve.lovechat.R
 import com.lovechat.myselve.lovechat.logic.layers.database.data.User
+import com.lovechat.myselve.lovechat.ui.reactive.ObserveWorker
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.register_fragment_layout.view.*
 
 
@@ -24,6 +27,11 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     private lateinit var mEditTextPassword: TextInputEditText
     private lateinit var mEditTextEmail: TextInputEditText
     private lateinit var mImageViewGoogle: ImageView
+    private lateinit var mTextViewInfoEmail : TextView
+    private lateinit var mTextViewInfoPAssword :TextView
+    private lateinit var mObserveWorker : ObserveWorker
+    private lateinit var observablePassword: Observable<Boolean>
+    private lateinit var observableEmail : Observable<Boolean>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +43,9 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         mImageViewGoogle = view.findViewById(R.id.iv_google_enter)
         mEditTextEmail = view.findViewById(R.id.et_email)
         mEditTextPassword = view.findViewById(R.id.et_password)
+
+
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         //  mButton.setOnClickListener(this)
         mImageViewGoogle.setOnClickListener(this)
