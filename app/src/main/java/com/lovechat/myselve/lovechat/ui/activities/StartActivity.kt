@@ -1,38 +1,53 @@
 package com.lovechat.myselve.lovechat.ui.activities
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
 import com.lovechat.myselve.lovechat.R
-import com.lovechat.myselve.lovechat.logic.layers.registration.factory.FactoryUserManager
-import com.lovechat.myselve.lovechat.logic.layers.registration.interfaces.UserManager
-import com.lovechat.myselve.lovechat.ui.fragments.ChatsFragment
+import com.lovechat.myselve.lovechat.logic.layers.database.data.User
+import com.lovechat.myselve.lovechat.logic.layers.database.interfaces.UserManagerInternet
+import com.lovechat.myselve.lovechat.logic.layers.database.registration.factory.FactoryInternetUserManager
+import com.lovechat.myselve.lovechat.logic.layers.database.interfaces.UserManagerLocale
+import com.lovechat.myselve.lovechat.logic.layers.database.registration.factory.FactoryLocaleUserManager
 import com.lovechat.myselve.lovechat.ui.fragments.RegisterFragment
-import java.security.AccessController.getContext
 
-class StartActivity : AppCompatActivity() {
+class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentListener {
 
 
-    lateinit var userManager: UserManager
+    override fun userRegisterByGoogle() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun userRegisterByEmailPassword(user : User) {
+        // Запрос по возможности сделать  в отдельном потоке
+      // Тут делаем запрос, в  другом в подписчике добпвляем в преференсы если пользователь успешно зареган
+        FactoryInternetUserManager.Build().registerUser(user)
+
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.simple_fragment_container)
 
-        when(FactoryUserManager.Build("loveChat")!!.checkUser()){
-            false -> showUserRegister(savedInstanceState)
+
+        // При оегистрации нового пользователя в приложение сохраняет в преференсах, что пользователь существует
+        // И с шешированием пароля и логина сохраняется тоже в преференсы логин и пароль пользователя,
+        // Которые подставляются автоматически при последующем входе
+        // Это чтобы не показывать окно регистрации, а сразу переходить к чату
+
+        when{
+            FactoryLocaleUserManager.Build().checkUser(context = applicationContext)   -> showUserRegister(savedInstanceState)
+            else -> showDefaultWindow()
         }
 
 
+
+    }
+
+    private fun showDefaultWindow() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun showUserRegister(savedInstanceState: Bundle?) {
@@ -42,8 +57,7 @@ class StartActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .add(R.id.main_fragment_container, RegisterFragment())
                 .commit()
-        } else
-        {
+        } else {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_fragment_container, RegisterFragment())
                 .commit()

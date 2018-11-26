@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
  * Created by Developer on 14.04.2018.
  */
 
-interface KeysCommonInteractor {
+public interface KeysCommonInteractor {
 
     @StringDef({ KeysField.LOG_TAG, KeysField.PASSWORD_KEY, KeysField.USER_KEY})
     @Retention(RetentionPolicy.SOURCE)
