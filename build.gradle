@@ -4,6 +4,28 @@ buildscript {
     ext.kotlin_version = '1.3.10'
     ext.support_version = 28
 
+    ext.versions = [
+
+            constraintLayout: "1.0.2",
+            rxJava2         : "2.1.3",
+            rxAndroid       : "2.0.1",
+            constraintLayout: "1.0.2",
+            firebaseDatabase: "16.0.5",
+            androidSupport  : "26.1.0",
+            firebaseAuth    : "16.0.5",
+            firebaseCore    : "16.0.1"
+    ]
+
+    ext.support = [
+            appcompat7      : "com.android.support:appcompat-v7:$versions.androidSupport",
+            support4        : "com.android.support:support-v4:$versions.androidSupport",
+            design          : "com.android.support:design:$versions.androidSupport",
+            recyclerview    : "com.android.support:recyclerview-v7:$versions.androidSupport",
+            constraintLayout: "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
+    ]
+
+
+
     repositories {
         google()
         jcenter()
@@ -11,7 +33,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.4'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'com.google.gms:google-services:4.0.1'
@@ -22,6 +44,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 }
 

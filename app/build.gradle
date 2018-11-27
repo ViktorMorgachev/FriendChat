@@ -2,14 +2,18 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 androidExtensions {
     experimental = true
 }
 
 
+
+
 android {
     compileSdkVersion 28
+
     defaultConfig {
         applicationId "com.lovechat.myselve.lovechat"
         minSdkVersion 26
@@ -20,30 +24,53 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    aaptOptions {
+        cruncherEnabled = true
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.google.firebase:firebase-database:11.8.0'
-    implementation 'com.google.firebase:firebase-auth:16.0.5'
-    implementation 'com.google.firebase:firebase-core:16.0.1'
+
+    // Support
+    compile support.constraintLayout
+    compile support.recyclerview
+    compile support.design
+    compile support.support4
+    compile support.appcompat7
+    compile support.design
+
+
+    // Firebase
+    implementation "com.google.firebase:firebase-database:$versions.firebaseDatabase"
+    implementation "com.google.firebase:firebase-auth:$versions.firebaseAuth"
+    implementation "com.google.firebase:firebase-core:$versions.firebaseCore"
+
+
+    // Test
     testImplementation 'junit:junit:4.12'
-    implementation "io.reactivex.rxjava2:rxjava:2.1.14"
-    // Anko Constraint layout
-    implementation "com.android.support.constraint:constraint-layout:1.1.0-beta6"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava2"
+    implementation "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
+
+
+
     // CardView-v7
     implementation "com.android.support:cardview-v7:$support_version"
+
+    // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-    implementation('com.mikepenz.materialdrawer:library:0.9.5@aar') {
+
+    // Design
+    implementation('com.mikepenz.materialdrawer:library:2.9.1@aar') {
         transitive = true
     }
 }
