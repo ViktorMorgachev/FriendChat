@@ -15,13 +15,13 @@ import com.lovechat.myselve.lovechat.ui.fragments.RegisterFragment
 class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentListener {
 
 
-    override fun userRegisterByGoogle(user : User) {
+    override fun userRegisterByGoogle(user: User) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun userRegisterByEmailPassword(user : User) {
+    override fun userRegisterByEmailPassword(user: User) {
         // Запрос по возможности сделать  в отдельном потоке
-      // Тут делаем запрос, в  другом в подписчике добпвляем в преференсы если пользователь успешно зареган
+        // Тут делаем запрос, в  другом в подписчике добпвляем в преференсы если пользователь успешно зареган
         FactoryInternetUserManager.Build().registerUser(user)
 
     }
@@ -37,13 +37,10 @@ class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentLi
         // Которые подставляются автоматически при последующем входе
         // Это чтобы не показывать окно регистрации, а сразу переходить к чату
 
-        when{
-            FactoryLocaleUserManager.Build().checkUser(context = applicationContext)   -> showUserRegister(savedInstanceState)
+        when {
+            FactoryLocaleUserManager.Build().checkUser(context = applicationContext) -> showUserRegister(savedInstanceState)
             else -> showDefaultWindow()
         }
-
-
-
     }
 
     private fun showDefaultWindow() {
@@ -54,13 +51,13 @@ class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentLi
         // If first starting activity
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .addToBackStack(null)
-                .add(R.id.main_fragment_container, RegisterFragment())
-                .commit()
+                    .addToBackStack(null)
+                    .add(R.id.main_fragment_container, RegisterFragment())
+                    .commit()
         } else {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.main_fragment_container, RegisterFragment())
-                .commit()
+                    .replace(R.id.main_fragment_container, RegisterFragment())
+                    .commit()
         }
     }
 }

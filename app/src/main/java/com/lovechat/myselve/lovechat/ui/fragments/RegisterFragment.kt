@@ -27,18 +27,19 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     private lateinit var mEditTextPassword: TextInputEditText
     private lateinit var mEditTextEmail: TextInputEditText
     private lateinit var mImageViewGoogle: ImageView
-    private lateinit var mTextViewInfoEmail : TextView
-    private lateinit var mTextViewInfoPAssword :TextView
-    private lateinit var mObserveWorker : ObserveWorker
+    private lateinit var mTextViewInfoEmail: TextView
+    private lateinit var mTextViewInfoPAssword: TextView
+    private lateinit var mObserveWorker: ObserveWorker
     private lateinit var observablePassword: Observable<Boolean>
-    private lateinit var observableEmail : Observable<Boolean>
+    private lateinit var observableEmail: Observable<Boolean>
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.register_fragment_layout, null)
+
         mButton = view.findViewById(R.id.btn_register)
         mImageViewGoogle = view.findViewById(R.id.iv_google_enter)
         mEditTextEmail = view.findViewById(R.id.et_email)
@@ -57,8 +58,8 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View) {
 
         val user = User(
-            password = mEditTextPassword.text.toString(),
-            email = mEditTextEmail.text.toString()
+                password = mEditTextPassword.text.toString(),
+                email = mEditTextEmail.text.toString()
         )
 
 
