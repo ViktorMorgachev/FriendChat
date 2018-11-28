@@ -7,5 +7,7 @@
     <color name="button_send_color">#30a7f5</color>
     <color name="blue">#10eefd</color>
     <color name="color_green">#159c36</color>
+    <color name="error_text_colour">#159c36</color>
+
 
 </resources>
