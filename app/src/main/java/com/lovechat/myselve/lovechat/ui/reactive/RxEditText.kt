@@ -17,6 +17,7 @@ fun getTextWatherObsevable(editText: EditText) : Observable<String> {
 
         override fun afterTextChanged(editable: Editable?) {
             publishSubject.onNext(editable.toString())
+
         }
 
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

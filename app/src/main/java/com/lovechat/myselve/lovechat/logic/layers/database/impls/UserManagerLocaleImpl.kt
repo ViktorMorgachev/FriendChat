@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.lovechat.myselve.lovechat.logic.layers.database.data.User
-import com.lovechat.myselve.lovechat.logic.layers.database.interfaces.UserManagerLocale
+import com.lovechat.myselve.lovechat.logic.layers.database.interfaces.UserManager
 
-class UserManagerLocaleImpl private constructor() : UserManagerLocale {
+class UserManagerLocaleImpl private constructor() : UserManager {
 
 
-    override fun checkUser(context: Context): Boolean {
+    override fun checkUser(context: Context?): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context).all.isEmpty()
     }
 

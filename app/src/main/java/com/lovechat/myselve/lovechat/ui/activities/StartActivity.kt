@@ -1,15 +1,11 @@
 package com.lovechat.myselve.lovechat.ui.activities
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import com.lovechat.myselve.lovechat.R
 import com.lovechat.myselve.lovechat.logic.layers.database.data.User
-import com.lovechat.myselve.lovechat.logic.layers.database.interfaces.UserManagerInternet
-import com.lovechat.myselve.lovechat.logic.layers.database.registration.factory.FactoryInternetUserManager
-import com.lovechat.myselve.lovechat.logic.layers.database.interfaces.UserManagerLocale
-import com.lovechat.myselve.lovechat.logic.layers.database.registration.factory.FactoryLocaleUserManager
+import com.lovechat.myselve.lovechat.logic.layers.database.impls.UserManagerInternetImpl
+import com.lovechat.myselve.lovechat.logic.layers.database.impls.UserManagerLocaleImpl
 import com.lovechat.myselve.lovechat.ui.fragments.RegisterFragment
 
 class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentListener {
@@ -22,7 +18,7 @@ class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentLi
     override fun userRegisterByEmailPassword(user: User) {
         // Запрос по возможности сделать  в отдельном потоке
         // Тут делаем запрос, в  другом в подписчике добпвляем в преференсы если пользователь успешно зареган
-        FactoryInternetUserManager.Build().registerUser(user)
+        UserManagerInternetImpl.instance.registerUser(user)
 
     }
 
@@ -38,7 +34,9 @@ class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentLi
         // Это чтобы не показывать окно регистрации, а сразу переходить к чату
 
         when {
-            FactoryLocaleUserManager.Build().checkUser(context = applicationContext) -> showUserRegister(savedInstanceState)
+            UserManagerLocaleImpl.instance.checkUser(context = applicationContext) -> showUserRegister(
+                savedInstanceState
+            )
             else -> showDefaultWindow()
         }
     }
@@ -51,13 +49,13 @@ class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentLi
         // If first starting activity
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .addToBackStack(null)
-                    .add(R.id.main_fragment_container, RegisterFragment())
-                    .commit()
+                .addToBackStack(null)
+                .add(R.id.main_fragment_container, RegisterFragment())
+                .commit()
         } else {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_fragment_container, RegisterFragment())
-                    .commit()
+                .replace(R.id.main_fragment_container, RegisterFragment())
+                .commit()
         }
     }
 }

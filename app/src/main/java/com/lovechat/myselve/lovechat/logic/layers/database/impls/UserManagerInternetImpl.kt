@@ -1,12 +1,13 @@
 package com.lovechat.myselve.lovechat.logic.layers.database.impls
 
+import android.content.Context
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.lovechat.myselve.lovechat.logic.layers.database.data.User
-import com.lovechat.myselve.lovechat.logic.layers.database.interfaces.UserManagerInternet
+import com.lovechat.myselve.lovechat.logic.layers.database.interfaces.UserManager
 import com.lovechat.myselve.lovechat.logic.layers.interactors.KeysCommonInteractor
 
-class UserManagerInternetImpl private constructor() : UserManagerInternet {
+class UserManagerInternetImpl private constructor() : UserManager {
 
     lateinit var mAuth: FirebaseAuth
 
@@ -35,7 +36,7 @@ class UserManagerInternetImpl private constructor() : UserManagerInternet {
         return false
     }
 
-    override fun checkUser(): Boolean {
+    override fun checkUser(context: Context?): Boolean {
         mAuth = FirebaseAuth.getInstance()
         return !mAuth.currentUser!!.equals("")
     }
