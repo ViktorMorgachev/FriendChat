@@ -36,24 +36,23 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    productFlavors {
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     // Support
     implementation support.constraintLayout
     implementation support.recyclerview
     implementation support.design
     implementation support.support4
     implementation support.appcompat7
-    implementation support.design
 
     // Firebase
     implementation "com.google.firebase:firebase-database:$versions.firebaseDatabase"
     implementation "com.google.firebase:firebase-auth:$versions.firebaseAuth"
     implementation "com.google.firebase:firebase-core:$versions.firebaseCore"
-
     // Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
