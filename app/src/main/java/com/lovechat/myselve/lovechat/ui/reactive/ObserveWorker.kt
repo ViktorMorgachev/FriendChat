@@ -1,11 +1,15 @@
 package com.lovechat.myselve.lovechat.ui.reactive
 
+import android.support.annotation.MainThread
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
@@ -43,15 +47,19 @@ class ObserveWorker private constructor() {
            return listOf(publishSubjectCorrectEmail, publishSubjectCorrectPassword)*/
 
         editTextEmailObservable.debounce(500, TimeUnit.MILLISECONDS)
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { v ->
-
+                    mTextViews.get(0).text = v
                 }
             )
 
         editTextEmailObservable.debounce(500, TimeUnit.MILLISECONDS)
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { v ->
+                { v -> mTextViews.get(1).text = v
                     print(v)
                 }
             )

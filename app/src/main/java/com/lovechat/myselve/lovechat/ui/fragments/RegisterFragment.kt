@@ -85,7 +85,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
 
         when {
-            view is ImageView -> mCallBackClickListener.userRegisterByGoogle(user = user)
+            view is ImageView -> mCallBackClickListener.userRegisterByGoogle()
         }
     }
 
@@ -100,7 +100,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     }
 
     interface OnRegisterFragmentListener {
-        fun userRegisterByGoogle(user: User)
+        fun userRegisterByGoogle()
         fun userRegisterByEmailPassword(user: User)
     }
 

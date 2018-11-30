@@ -11,7 +11,7 @@ import com.lovechat.myselve.lovechat.ui.fragments.RegisterFragment
 class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentListener {
 
 
-    override fun userRegisterByGoogle(user: User) {
+    override fun userRegisterByGoogle( ) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
