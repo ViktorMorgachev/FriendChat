@@ -16,9 +16,13 @@ import java.util.concurrent.TimeUnit
 
 class ObserveWorker private constructor() {
 
+    interface ObserveWorkerListener {
+        fun setEmailInfo(text: CharSequence)
+        fun setPasswordInfo(text: CharSequence)
+    }
+
+    private lateinit var mCallBackListener: ObserveWorkerListener
     private var observables: MutableList<Observable<String>> = mutableListOf()
-    private var mTextViews: MutableList<TextView> = mutableListOf()
-    private var mEditTexts: MutableList<EditText> = mutableListOf()
 
 
     companion object Factory {
@@ -30,42 +34,35 @@ class ObserveWorker private constructor() {
         }
     }
 
-    fun observe(): Observable<List<Boolean>> {
+    fun observe(observeWorkerListener: ObserveWorkerListener): Observable<List<Boolean>> {
 
 
+        this.mCallBackListener = observeWorkerListener
         val editTextPasswordObservable = observables.get(0)
         val editTextEmailObservable = observables.get(1)
 
         val array = mutableListOf<Boolean>()
-        /*   val publishSubjectCorrectPassword = PublishSubject.create<Boolean>()
-           val publishSubjectCorrectEmail = PublishSubject.create<Boolean>()
 
-           // Нужно подписать publishSubjectCorrectPassword  и  на события
-
-           editTextEmailObservable.subscribe()
-
-           return listOf(publishSubjectCorrectEmail, publishSubjectCorrectPassword)*/
-
-        editTextEmailObservable.debounce(500, TimeUnit.MILLISECONDS)
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+        editTextPasswordObservable.debounce(500, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
             .subscribe(
                 { v ->
-                    mTextViews.get(0).text = v
+                    // Разобраться с потоками
+                    mCallBackListener.setPasswordInfo(v)
                 }
             )
 
         editTextEmailObservable.debounce(500, TimeUnit.MILLISECONDS)
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
             .subscribe(
-                { v -> mTextViews.get(1).text = v
-                    print(v)
+                { v ->
+                    // Тоже самое
+                    mCallBackListener.setEmailInfo(v)
                 }
             )
 
         return Observable.fromArray(
-            )
+        )
     }
 
 
@@ -75,15 +72,19 @@ class ObserveWorker private constructor() {
         editTextPassword: EditText
     ): ObserveWorker {
 
-        mTextViews.addAll(listOf(editTextPassword, editTextEmail))
 
         val publishSubjectPassword: PublishSubject<String> = PublishSubject.create()
         val publishSubjectEmail: PublishSubject<String> = PublishSubject.create()
+        // Наблюдюдать в главном потоке, даннве буду генеритя в торугом потоке
+        // publishSubjectEmail.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+        //  publishSubjectPassword.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+
 
         editTextPassword.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(editable: Editable?) {
-                publishSubjectPassword.onNext(editable.toString())
+                publishSubjectPassword
+                    .onNext(editable.toString())
 
             }
 
@@ -97,7 +98,8 @@ class ObserveWorker private constructor() {
         editTextEmail.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(editable: Editable?) {
-                publishSubjectEmail.onNext(editable.toString())
+                publishSubjectEmail
+                    .onNext(editable.toString())
 
             }
 
@@ -110,10 +112,6 @@ class ObserveWorker private constructor() {
 
         observables.addAll(listOf(publishSubjectPassword, publishSubjectEmail))
         return this
-    }
-
-    fun setTextViews(editTexts: MutableList<TextView>) {
-        this.mTextViews = editTexts
     }
 
 

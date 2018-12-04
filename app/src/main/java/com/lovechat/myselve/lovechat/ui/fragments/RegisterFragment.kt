@@ -21,7 +21,14 @@ import io.reactivex.ObservableEmitter
 import io.reactivex.Observer
 
 
-class RegisterFragment : Fragment(), View.OnClickListener {
+class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.ObserveWorkerListener {
+    override fun setEmailInfo(text: CharSequence) {
+        mTextViewInfoEmail.text = text
+    }
+
+    override fun setPasswordInfo(text: CharSequence) {
+       mTextViewInfoPAssword.text = text
+    }
 
     private lateinit var mSharedPreferences: SharedPreferences
     private lateinit var mButton: Button
@@ -52,7 +59,6 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
 
         mObserveWorker = ObserveWorker.getInstance()
-        mObserveWorker.setTextViews(mutableListOf(mTextViewInfoEmail, mTextViewInfoPAssword))
         mObserveWorker.setTextWatcherObsevable(mEditTextEmail, mEditTextPassword)
 
         // Запускаем слушатель
@@ -70,7 +76,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
     private fun startObservable() {
 
-        val observables = mObserveWorker.observe()
+        val observables = mObserveWorker.observe(this)
 
 
     }
