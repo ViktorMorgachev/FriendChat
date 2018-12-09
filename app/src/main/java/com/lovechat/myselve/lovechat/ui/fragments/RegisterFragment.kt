@@ -32,8 +32,8 @@ class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.Observe
     }
 
     override fun setPasswordInfoError(msg: CharSequence) {
-        mTextViewInfoEmail.setTextColor(Color.RED)
-        mTextViewInfoEmail.setText(msg)
+        mTextViewInfoPassword.setTextColor(Color.RED)
+        mTextViewInfoPassword.setText(msg)
     }
 
     override fun activateButton() {
@@ -47,6 +47,7 @@ class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.Observe
     }
 
     override fun setPasswordInfo(text: CharSequence) {
+        mTextViewInfoPassword.setTextColor(Color.GREEN)
         mTextViewInfoPassword.text = text
     }
 
@@ -98,7 +99,7 @@ class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.Observe
 
 
         // Отписываемся
-        ObserveWorker.getInstance().unsubscribe()
+       // ObserveWorker.getInstance().unsubscribe()
 
         val snackbar =
             Snackbar.make(root_layout, "Button was activated", Snackbar.LENGTH_INDEFINITE)

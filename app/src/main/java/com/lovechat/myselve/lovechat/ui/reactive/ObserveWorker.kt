@@ -3,8 +3,11 @@ package com.lovechat.myselve.lovechat.ui.reactive
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
 import com.lovechat.myselve.lovechat.R
+import com.lovechat.myselve.lovechat.logic.interactors.KeysCommonInteractor
 import com.lovechat.myselve.lovechat.logic.registration.Validator
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -60,6 +63,8 @@ class ObserveWorker private constructor() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { v ->
+                    Toast.makeText(context, "editTextPasswordObservable", Toast.LENGTH_SHORT).show()
+
                     when {
                         Validator.valid(
                             Validator.PASSWORD_PATTERN,
@@ -67,6 +72,7 @@ class ObserveWorker private constructor() {
                         ) -> mCallBackListener.setPasswordInfo(context.resources.getString(R.string.right_password))
                         else -> mCallBackListener.setPasswordInfoError(context.resources.getString(R.string.wrong_password))
                     }
+
                 }
             )
 

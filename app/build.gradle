@@ -67,6 +67,10 @@ dependencies {
     implementation('com.mikepenz.materialdrawer:library:2.9.1@aar') {
         transitive = true
     }
+
+    // https://mvnrepository.com/artifact/com.jakewharton.rxbinding2/rxbinding-kotlin
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$versions.rxBinding2"
+
 }
 repositories {
     mavenCentral()

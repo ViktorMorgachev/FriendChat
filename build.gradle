@@ -10,6 +10,7 @@ buildscript {
             rxAndroid       : "2.0.1",
             firebaseDatabase: "16.0.5",
             androidSupport  : "26.1.0",
+            rxBinding2      : "2.2.0",
             firebaseAuth    : "16.0.5",
             firebaseCore    : "16.0.5",
             cardView7       : '26.1.0'
