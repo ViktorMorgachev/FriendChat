@@ -15,7 +15,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.lovechat.myselve.lovechat"
-        minSdkVersion 26
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -48,7 +48,6 @@ dependencies {
     implementation support.design
     implementation support.support4
     implementation support.appcompat7
-
     // Firebase
     implementation "com.google.firebase:firebase-database:$versions.firebaseDatabase"
     implementation "com.google.firebase:firebase-auth:$versions.firebaseAuth"

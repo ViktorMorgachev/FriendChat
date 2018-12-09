@@ -9,6 +9,7 @@ import android.widget.TextView
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
@@ -19,6 +20,13 @@ class ObserveWorker private constructor() {
     interface ObserveWorkerListener {
         fun setEmailInfo(text: CharSequence)
         fun setPasswordInfo(text: CharSequence)
+        fun activateButton()
+    }
+
+    object Crutch {
+        // Это пока костыль
+        private var isRightPassword = false
+        private var isRightEmail = false
     }
 
     private lateinit var mCallBackListener: ObserveWorkerListener
@@ -32,28 +40,28 @@ class ObserveWorker private constructor() {
         fun getInstance(): ObserveWorker {
             return ourInstance
         }
+
     }
 
-    fun observe(observeWorkerListener: ObserveWorkerListener): Observable<List<Boolean>> {
+    fun observe(observeWorkerListener: ObserveWorkerListener): Observable<Boolean> {
 
 
         this.mCallBackListener = observeWorkerListener
         val editTextPasswordObservable = observables.get(0)
         val editTextEmailObservable = observables.get(1)
 
-        val array = mutableListOf<Boolean>()
+        // val array = mutableListOf<Boolean>()
 
         editTextPasswordObservable.debounce(500, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { v ->
-                    // Разобраться с потоками
                     mCallBackListener.setPasswordInfo(v)
                 }
             )
 
         editTextEmailObservable.debounce(500, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { v ->
                     // Тоже самое
@@ -61,8 +69,12 @@ class ObserveWorker private constructor() {
                 }
             )
 
-        return Observable.fromArray(
-        )
+        return Observable
+            .combineLatest(
+                editTextEmailObservable,
+                editTextPasswordObservable,
+                BiFunction { email, password -> email.isNotEmpty() && password.isNotEmpty() })
+
     }
 
 
@@ -75,9 +87,7 @@ class ObserveWorker private constructor() {
 
         val publishSubjectPassword: PublishSubject<String> = PublishSubject.create()
         val publishSubjectEmail: PublishSubject<String> = PublishSubject.create()
-        // Наблюдюдать в главном потоке, даннве буду генеритя в торугом потоке
-        // publishSubjectEmail.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-        //  publishSubjectPassword.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+
 
 
         editTextPassword.addTextChangedListener(object : TextWatcher {
@@ -112,6 +122,12 @@ class ObserveWorker private constructor() {
 
         observables.addAll(listOf(publishSubjectPassword, publishSubjectEmail))
         return this
+    }
+
+    fun unsubscribe() {
+        observables.forEach {
+            it.unsubscribeOn(Schedulers.computation())
+        }
     }
 
 

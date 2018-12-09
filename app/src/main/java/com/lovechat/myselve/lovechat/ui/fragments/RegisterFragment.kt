@@ -4,30 +4,37 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.design.widget.Snackbar
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.lovechat.myselve.lovechat.R
-import com.lovechat.myselve.lovechat.logic.layers.database.data.User
+import com.lovechat.myselve.lovechat.models.data.User
+import com.lovechat.myselve.lovechat.data.layers.interactors.KeysCommonInteractor
 import com.lovechat.myselve.lovechat.ui.reactive.ObserveWorker
 import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
-import io.reactivex.Observer
+import kotlinx.android.synthetic.main.register_fragment_layout.*
 
 
 class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.ObserveWorkerListener {
+
+    override fun activateButton() {
+        Log.d(KeysCommonInteractor.KeysField.LOG_TAG, javaClass.canonicalName + " activateButton()")
+        mButton.setOnClickListener(this@RegisterFragment)
+    }
+
     override fun setEmailInfo(text: CharSequence) {
         mTextViewInfoEmail.text = text
     }
 
     override fun setPasswordInfo(text: CharSequence) {
-       mTextViewInfoPAssword.text = text
+        mTextViewInfoPassword.text = text
     }
 
     private lateinit var mSharedPreferences: SharedPreferences
@@ -37,12 +44,11 @@ class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.Observe
     private lateinit var mEditTextEmail: TextInputEditText
     private lateinit var mImageViewGoogle: ImageView
     private lateinit var mTextViewInfoEmail: TextView
-    private lateinit var mTextViewInfoPAssword: TextView
+    private lateinit var mTextViewInfoPassword: TextView
     private lateinit var mObserveWorker: ObserveWorker
     private lateinit var observer: List<Observable<Boolean>>
 
 
-    // Будем отправлять мапу текстВью и ЕдитТекстов в ObserveWorker
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,7 +60,7 @@ class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.Observe
         mImageViewGoogle = view.findViewById(R.id.iv_google_enter)
         mEditTextEmail = view.findViewById(R.id.et_email)
         mEditTextPassword = view.findViewById(R.id.et_password)
-        mTextViewInfoPAssword = view.findViewById(R.id.tv_info_password)
+        mTextViewInfoPassword = view.findViewById(R.id.tv_info_password)
         mTextViewInfoEmail = view.findViewById(R.id.tv_info_email)
 
 
@@ -62,7 +68,7 @@ class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.Observe
         mObserveWorker.setTextWatcherObsevable(mEditTextEmail, mEditTextPassword)
 
         // Запускаем слушатель
-        startObservable()
+        mObserveWorker.observe(this)
 
 
 
@@ -74,15 +80,18 @@ class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.Observe
         return view
     }
 
-    private fun startObservable() {
-
-        val observables = mObserveWorker.observe(this)
-
-
-    }
-
 
     override fun onClick(view: View) {
+
+
+        // Отписываемся
+        ObserveWorker.getInstance().unsubscribe()
+
+        val snackbar =
+            Snackbar.make(root_layout, "Button was activated", Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction("Ok", {})
+        snackbar.show()
+
 
         val user = User(
             password = mEditTextPassword.text.toString(),

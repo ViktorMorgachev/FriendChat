@@ -3,9 +3,9 @@ package com.lovechat.myselve.lovechat.ui.activities
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.lovechat.myselve.lovechat.R
-import com.lovechat.myselve.lovechat.logic.layers.database.data.User
-import com.lovechat.myselve.lovechat.logic.layers.database.impls.UserManagerInternetImpl
-import com.lovechat.myselve.lovechat.logic.layers.database.impls.UserManagerLocaleImpl
+import com.lovechat.myselve.lovechat.models.data.User
+import com.lovechat.myselve.lovechat.data.layers.database.impls.UserManagerInternetImpl
+import com.lovechat.myselve.lovechat.data.layers.database.impls.UserManagerLocaleImpl
 import com.lovechat.myselve.lovechat.ui.fragments.RegisterFragment
 
 class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentListener {
