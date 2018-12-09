@@ -1,13 +1,12 @@
 package com.lovechat.myselve.lovechat.ui.reactive
 
-import android.support.annotation.MainThread
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.EditText
-import android.widget.TextView
+import com.lovechat.myselve.lovechat.R
+import com.lovechat.myselve.lovechat.logic.registration.Validator
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
@@ -21,6 +20,8 @@ class ObserveWorker private constructor() {
         fun setEmailInfo(text: CharSequence)
         fun setPasswordInfo(text: CharSequence)
         fun activateButton()
+        fun setEmailInfoError(msg: CharSequence)
+        fun setPasswordInfoError(msg: CharSequence)
     }
 
     object Crutch {
@@ -43,7 +44,10 @@ class ObserveWorker private constructor() {
 
     }
 
-    fun observe(observeWorkerListener: ObserveWorkerListener): Observable<Boolean> {
+    fun observe(
+        observeWorkerListener: ObserveWorkerListener,
+        context: Context
+    ): Observable<Boolean> {
 
 
         this.mCallBackListener = observeWorkerListener
@@ -56,7 +60,13 @@ class ObserveWorker private constructor() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { v ->
-                    mCallBackListener.setPasswordInfo(v)
+                    when {
+                        Validator.valid(
+                            Validator.PASSWORD_PATTERN,
+                            v
+                        ) -> mCallBackListener.setPasswordInfo(context.resources.getString(R.string.right_password))
+                        else -> mCallBackListener.setPasswordInfoError(context.resources.getString(R.string.wrong_password))
+                    }
                 }
             )
 
@@ -64,8 +74,14 @@ class ObserveWorker private constructor() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { v ->
-                    // Тоже самое
-                    mCallBackListener.setEmailInfo(v)
+                    when {
+                        Validator.valid(
+                            Validator.EMAIL_PATTERN,
+                            v
+                        ) -> mCallBackListener.setEmailInfo(context.resources.getString(R.string.right_email))
+                        else -> mCallBackListener.setEmailInfoError(context.resources.getString(R.string.wrong_email))
+                    }
+
                 }
             )
 

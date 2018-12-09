@@ -2,6 +2,7 @@ package com.lovechat.myselve.lovechat.ui.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
@@ -15,8 +16,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.lovechat.myselve.lovechat.R
+import com.lovechat.myselve.lovechat.logic.interactors.KeysCommonInteractor
 import com.lovechat.myselve.lovechat.models.data.User
-import com.lovechat.myselve.lovechat.data.layers.interactors.KeysCommonInteractor
 import com.lovechat.myselve.lovechat.ui.reactive.ObserveWorker
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.register_fragment_layout.*
@@ -24,12 +25,24 @@ import kotlinx.android.synthetic.main.register_fragment_layout.*
 
 class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.ObserveWorkerListener {
 
+
+    override fun setEmailInfoError(msg: CharSequence) {
+        mTextViewInfoEmail.setTextColor(Color.RED)
+        mTextViewInfoEmail.setText(msg)
+    }
+
+    override fun setPasswordInfoError(msg: CharSequence) {
+        mTextViewInfoEmail.setTextColor(Color.RED)
+        mTextViewInfoEmail.setText(msg)
+    }
+
     override fun activateButton() {
         Log.d(KeysCommonInteractor.KeysField.LOG_TAG, javaClass.canonicalName + " activateButton()")
         mButton.setOnClickListener(this@RegisterFragment)
     }
 
     override fun setEmailInfo(text: CharSequence) {
+        mTextViewInfoEmail.setTextColor(Color.GREEN)
         mTextViewInfoEmail.text = text
     }
 
@@ -68,7 +81,7 @@ class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.Observe
         mObserveWorker.setTextWatcherObsevable(mEditTextEmail, mEditTextPassword)
 
         // Запускаем слушатель
-        mObserveWorker.observe(this)
+        mObserveWorker.observe(this, context)
 
 
 

@@ -5,5 +5,9 @@
     <string name="tv_password">Ваш пароль</string>
     <string name="send">Отправить</string>
     <string name="search_hint">Поиск друзей</string>
+    <string name="wrong_email">Неверный email</string>
+    <string name="wrong_password">Неверный пароль</string>
+    <string name="right_email">Почта верная</string>
+    <string name="right_password">Пароль верный</string>
     <string name="alternative_entering">Альтернативный вход</string>
 </resources>
