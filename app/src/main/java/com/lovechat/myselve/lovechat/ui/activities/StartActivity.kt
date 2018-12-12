@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.lovechat.myselve.lovechat.R
 import com.lovechat.myselve.lovechat.models.data.User
-import com.lovechat.myselve.lovechat.data.layers.database.impls.UserManagerInternetImpl
-import com.lovechat.myselve.lovechat.data.layers.database.impls.UserManagerLocaleImpl
+import com.lovechat.myselve.lovechat.data.layers.database.impls.FirebaseRegistrator
+import com.lovechat.myselve.lovechat.data.layers.database.impls.UserLocaleRegistrator
 import com.lovechat.myselve.lovechat.ui.fragments.RegisterFragment
 
 class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentListener {
@@ -18,7 +18,7 @@ class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentLi
     override fun userRegisterByEmailPassword(user: User) {
         // Запрос по возможности сделать  в отдельном потоке
         // Тут делаем запрос, в  другом в подписчике добпвляем в преференсы если пользователь успешно зареган
-        UserManagerInternetImpl.instance.registerUser(user)
+        FirebaseRegistrator.instance.registerUser(user)
 
     }
 
@@ -34,7 +34,7 @@ class StartActivity : AppCompatActivity(), RegisterFragment.OnRegisterFragmentLi
         // Это чтобы не показывать окно регистрации, а сразу переходить к чату
 
         when {
-            UserManagerLocaleImpl.instance.checkUser(context = applicationContext) -> showUserRegister(
+            UserLocaleRegistrator.instance.checkUser(context = applicationContext) -> showUserRegister(
                 savedInstanceState
             )
             else -> showDefaultWindow()

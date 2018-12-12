@@ -27,10 +27,12 @@ class ObserveWorker private constructor() {
         fun setPasswordInfoError(msg: CharSequence)
     }
 
-    object Crutch {
+    object NiceCrutch {
         // Это пока костыль
-        private var isRightPassword = false
-        private var isRightEmail = false
+        @JvmStatic
+        var isRightPassword = false
+        @JvmStatic
+        var isRightEmail = false
     }
 
     private lateinit var mCallBackListener: ObserveWorkerListener
@@ -50,12 +52,13 @@ class ObserveWorker private constructor() {
     fun observe(
         observeWorkerListener: ObserveWorkerListener,
         context: Context
-    ): Observable<Boolean> {
+    ): Observable<List<Boolean>> {
 
 
         this.mCallBackListener = observeWorkerListener
         val editTextPasswordObservable = observables.get(0)
         val editTextEmailObservable = observables.get(1)
+        var list = mutableListOf<Boolean>(NiceCrutch.isRightEmail, NiceCrutch.isRightPassword)
 
         // val array = mutableListOf<Boolean>()
 
@@ -63,10 +66,8 @@ class ObserveWorker private constructor() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { v ->
-                    Toast.makeText(context, "editTextPasswordObservable", Toast.LENGTH_SHORT).show()
-
                     when {
-                        Validator.valid(
+                     /* list.removeAt(1)*/ Validator.valid(
                             Validator.PASSWORD_PATTERN,
                             v
                         ) -> mCallBackListener.setPasswordInfo(context.resources.getString(R.string.right_password))
@@ -91,11 +92,14 @@ class ObserveWorker private constructor() {
                 }
             )
 
-        return Observable
+
+        return Observable.fromArray(list)
+
+        /*Observable
             .combineLatest(
                 editTextEmailObservable,
                 editTextPasswordObservable,
-                BiFunction { email, password -> email.isNotEmpty() && password.isNotEmpty() })
+                BiFunction { email, password -> email.isNotEmpty() && password.isNotEmpty() })*/
 
     }
 
