@@ -13,7 +13,7 @@ buildscript {
             rxBinding2      : "2.2.0",
             firebaseAuth    : "16.0.5",
             firebaseCore    : "16.0.5",
-            cardView7       : '26.1.0'
+            cardView7       : "1.2.0"
     ]
 
     ext.support = [
@@ -21,7 +21,8 @@ buildscript {
             support4        : "com.android.support:support-v4:$versions.androidSupport",
             design          : "com.android.support:design:$versions.androidSupport",
             recyclerview    : "com.android.support:recyclerview-v7:$versions.androidSupport",
-            constraintLayout: "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
+            constraintLayout: "com.android.support.constraint:constraint-layout:$versions.constraintLayout",
+            support_v13     : "com.android.support:support-v13:$versions.androidSupport"
     ]
 
 
@@ -48,6 +49,9 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 

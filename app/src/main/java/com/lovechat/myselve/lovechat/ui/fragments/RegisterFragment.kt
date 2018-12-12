@@ -15,6 +15,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import butterknife.BindView
+import butterknife.BindViews
+import butterknife.ButterKnife
 import com.lovechat.myselve.lovechat.R
 import com.lovechat.myselve.lovechat.logic.interactors.KeysCommonInteractor
 import com.lovechat.myselve.lovechat.models.data.User
@@ -51,16 +54,35 @@ class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.Observe
         mTextViewInfoPassword.text = text
     }
 
-    private lateinit var mSharedPreferences: SharedPreferences
-    private lateinit var mButton: Button
-    lateinit var mCallBackClickListener: OnRegisterFragmentListener;
-    private lateinit var mEditTextPassword: TextInputEditText
-    private lateinit var mEditTextEmail: TextInputEditText
-    private lateinit var mImageViewGoogle: ImageView
-    private lateinit var mTextViewInfoEmail: TextView
-    private lateinit var mTextViewInfoPassword: TextView
+
+
+    // Any Fields
     private lateinit var mObserveWorker: ObserveWorker
     private lateinit var observer: List<Observable<Boolean>>
+    private lateinit var mSharedPreferences: SharedPreferences
+
+    // Views
+    @BindView(R.id.btn_register)
+    private lateinit var mButton: Button
+
+    @BindView(R.id.et_password)
+    private lateinit var mEditTextPassword: TextInputEditText
+
+    @BindView(R.id.et_email)
+    private lateinit var mEditTextEmail: TextInputEditText
+
+    @BindView(R.id.iv_google_enter)
+    private lateinit var mImageViewGoogle: ImageView
+
+    @BindView(R.id.tv_info_email)
+    private lateinit var mTextViewInfoEmail: TextView
+
+    @BindView(R.id.tv_info_password)
+    private lateinit var mTextViewInfoPassword: TextView
+
+
+    // CallBack
+    lateinit var mCallBackClickListener: OnRegisterFragmentListener;
 
 
     override fun onCreateView(
@@ -70,13 +92,7 @@ class RegisterFragment : Fragment(), View.OnClickListener, ObserveWorker.Observe
     ): View? {
         val view = inflater.inflate(R.layout.register_fragment_layout, null)
 
-        mButton = view.findViewById(R.id.btn_register)
-        mImageViewGoogle = view.findViewById(R.id.iv_google_enter)
-        mEditTextEmail = view.findViewById(R.id.et_email)
-        mEditTextPassword = view.findViewById(R.id.et_password)
-        mTextViewInfoPassword = view.findViewById(R.id.tv_info_password)
-        mTextViewInfoEmail = view.findViewById(R.id.tv_info_email)
-
+        ButterKnife.bind(this, view)
 
         mObserveWorker = ObserveWorker.getInstance()
         mObserveWorker.setTextWatcherObsevable(mEditTextEmail, mEditTextPassword)
